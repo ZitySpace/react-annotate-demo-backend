@@ -1,0 +1,4 @@
+.vercel
+.*.swp
+__pycache__
+requirements.txt

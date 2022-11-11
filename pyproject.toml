@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "react-annotate-demo-backend"
+version = "0.1.0"
+description = "Backend api server for react-annotate demo app"
+authors = ["Rui <rzhengphy@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.86.0"
+uvicorn = "^0.19.0"
+
+[tool.poetry.dev-dependencies]
+ipdb = "^0.13.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
