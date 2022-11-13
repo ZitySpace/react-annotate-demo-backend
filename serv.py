@@ -45,16 +45,83 @@ def get_annotations(task: Task):
         ]
 
     if task == Task.segmentation:
-        pass
+        anno = [
+            {
+                k
+                if k != 'file_name'
+                else 'name': v
+                if k != 'annotations'
+                else [
+                    {
+                        'category': instance_anno['category'],
+                        'mask': instance_anno['segmentation'],
+                    }
+                    for instance_anno in v
+                ]
+                for k, v in img_anno.items()
+            }
+            for img_anno in instances
+        ]
 
     if task == Task.keypoints:
-        pass
+        anno = [
+            {
+                k
+                if k != 'file_name'
+                else 'name': v
+                if k != 'annotations'
+                else [
+                    {
+                        'keypoints': person_anno['keypoints'],
+                    }
+                    for person_anno in v
+                ]
+                for k, v in img_anno.items()
+            }
+            for img_anno in keypoints
+            if len(img_anno['annotations'])
+        ]
 
     if task == Task.detection_segmentation:
-        pass
+        anno = [
+            {
+                k
+                if k != 'file_name'
+                else 'name': v
+                if k != 'annotations'
+                else [
+                    {
+                        'category': instance_anno['category'],
+                        **dict(zip(['x', 'y', 'w', 'h'], instance_anno['bbox'])),
+                        'mask': instance_anno['segmentation'],
+                    }
+                    for instance_anno in v
+                ]
+                for k, v in img_anno.items()
+            }
+            for img_anno in instances
+        ]
 
     if task == Task.keypoints_segmentation:
-        pass
+        anno = [
+            {
+                k
+                if k != 'file_name'
+                else 'name': v
+                if k != 'annotations'
+                else [
+                    {
+                        'category': person_anno['category'],
+                        'keypoints': person_anno['keypoints'],
+                        'mask': person_anno['segmentation'],
+                    }
+                    for person_anno in v
+                ]
+                for k, v in img_anno.items()
+            }
+            for img_anno in keypoints
+            if len(img_anno['annotations'])
+        ]
 
     return anno
 
